@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { authOptions } from "@/lib/auth";
 import { FilterSummary } from "@/components/filter-summary";
@@ -31,7 +30,7 @@ export default async function AuditLogsPage({ searchParams }: Props) {
   const actorFilter = (resolvedParams.actor ?? "").trim();
   const tenantId = session.user.tenantId;
 
-  const where: Prisma.AuditLogWhereInput = {
+  const where = {
     tenantId,
     ...(actionFilter ? { action: { contains: actionFilter } } : {}),
     ...(actorFilter

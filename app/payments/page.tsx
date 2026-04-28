@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { createPayment } from "@/app/payments/actions";
 import { FilterSummary } from "@/components/filter-summary";
@@ -99,7 +98,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
   const toDateEndExclusive =
     toDate && !Number.isNaN(toDate.getTime()) ? addDays(startOfDay(toDate), 1) : null;
 
-  const paymentsFilterWhere: Prisma.PaymentWhereInput = {
+  const paymentsFilterWhere = {
     tenantId,
     ...(selectedStaffId ? { staffId: selectedStaffId } : {}),
     ...(selectedMethod && ["CASH", "CARD", "QR"].includes(selectedMethod)

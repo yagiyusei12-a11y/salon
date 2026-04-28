@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { createMenu, deleteMenu, updateMenu } from "@/app/menus/actions";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
@@ -40,7 +39,7 @@ export default async function MenusPage({ searchParams }: Props) {
   setSortUnlessDefault(returnToQuery, "sort", selectedSort, "created_desc");
   const returnTo = pathnameWithSearch("/menus", returnToQuery);
 
-  const where: Prisma.ServiceMenuWhereInput = {
+  const where = {
     tenantId: session.user.tenantId,
     ...(q ? { name: { contains: q } } : {}),
   };

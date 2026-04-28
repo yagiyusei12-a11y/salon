@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { createCustomer, updateCustomerTags } from "@/app/customers/actions";
 import { FilterSummary } from "@/components/filter-summary";
@@ -57,7 +56,7 @@ export default async function CustomersPage({ searchParams }: Props) {
   const returnTo = pathnameWithSearch("/customers", returnToQuery);
   const exportHref = exportApiHref("customers", returnToQuery);
 
-  const where: Prisma.CustomerWhereInput = {
+  const where = {
     tenantId: session.user.tenantId,
     ...(selectedTag && ["VIP", "CAUTION", "NEW"].includes(selectedTag)
       ? { tags: { contains: selectedTag } }

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { createStaff, updateStaff } from "@/app/staff/actions";
 import { FilterSummary } from "@/components/filter-summary";
@@ -42,7 +41,7 @@ export default async function StaffPage({ searchParams }: Props) {
   setSortUnlessDefault(returnToQuery, "sort", selectedSort, "role_name_asc");
   const returnTo = pathnameWithSearch("/staff", returnToQuery);
 
-  const where: Prisma.UserWhereInput = {
+  const where = {
     tenantId: session.user.tenantId,
     ...(statusFilter === "active"
       ? { isActive: true }
