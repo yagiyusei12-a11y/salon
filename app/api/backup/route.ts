@@ -83,25 +83,25 @@ export async function GET() {
       exportedAt: new Date().toISOString(),
       tenantId,
       data: {
-        customers: customers.map((row) => ({
+        customers: customers.map((row: (typeof customers)[number]) => ({
           ...row,
           lastVisitAt: row.lastVisitAt?.toISOString() ?? null,
           createdAt: row.createdAt.toISOString(),
           updatedAt: row.updatedAt.toISOString(),
         })),
-        serviceMenus: serviceMenus.map((row) => ({
+        serviceMenus: serviceMenus.map((row: (typeof serviceMenus)[number]) => ({
           ...row,
           createdAt: row.createdAt.toISOString(),
           updatedAt: row.updatedAt.toISOString(),
         })),
-        appointments: appointments.map((row) => ({
+        appointments: appointments.map((row: (typeof appointments)[number]) => ({
           ...row,
           startAt: row.startAt.toISOString(),
           endAt: row.endAt.toISOString(),
           createdAt: row.createdAt.toISOString(),
           updatedAt: row.updatedAt.toISOString(),
         })),
-        payments: payments.map((row) => ({
+        payments: payments.map((row: (typeof payments)[number]) => ({
           ...row,
           paidAt: row.paidAt.toISOString(),
           createdAt: row.createdAt.toISOString(),
