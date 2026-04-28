@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import {
   cancelAppointment,
@@ -118,7 +117,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
   const todayStart = startOfDay(new Date());
   const tomorrowStart = addDays(todayStart, 1);
 
-  const filteredWhere: Prisma.AppointmentWhereInput = {
+  const filteredWhere = {
     tenantId,
     ...(selectedStaffId ? { staffId: selectedStaffId } : {}),
     ...(selectedStatus && ["BOOKED", "COMPLETED", "CANCELLED"].includes(selectedStatus)
