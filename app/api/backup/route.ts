@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import type { Prisma } from "@prisma/client";
 
 import { authOptions } from "@/lib/auth";
 import { logAudit } from "@/lib/audit-log";
@@ -142,80 +141,78 @@ export async function POST(request: Request) {
       return new NextResponse("Invalid backup payload", { status: 400 });
     }
 
-    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      await tx.payment.deleteMany({ where: { tenantId } });
-      await tx.appointment.deleteMany({ where: { tenantId } });
-      await tx.serviceMenu.deleteMany({ where: { tenantId } });
-      await tx.customer.deleteMany({ where: { tenantId } });
+    await prisma.payment.deleteMany({ where: { tenantId } });
+    await prisma.appointment.deleteMany({ where: { tenantId } });
+    await prisma.serviceMenu.deleteMany({ where: { tenantId } });
+    await prisma.customer.deleteMany({ where: { tenantId } });
 
-      if (body.data.customers.length > 0) {
-        await tx.customer.createMany({
-          data: body.data.customers.map((row) => ({
-            id: row.id,
-            tenantId,
-            lastName: row.lastName,
-            firstName: row.firstName,
-            phone: row.phone,
-            email: row.email,
-            notes: row.notes,
-            tags: row.tags,
-            lastVisitAt: row.lastVisitAt ? new Date(row.lastVisitAt) : null,
-            createdAt: new Date(row.createdAt),
-            updatedAt: new Date(row.updatedAt),
-          })),
-        });
-      }
+    if (body.data.customers.length > 0) {
+      await prisma.customer.createMany({
+        data: body.data.customers.map((row) => ({
+          id: row.id,
+          tenantId,
+          lastName: row.lastName,
+          firstName: row.firstName,
+          phone: row.phone,
+          email: row.email,
+          notes: row.notes,
+          tags: row.tags,
+          lastVisitAt: row.lastVisitAt ? new Date(row.lastVisitAt) : null,
+          createdAt: new Date(row.createdAt),
+          updatedAt: new Date(row.updatedAt),
+        })),
+      });
+    }
 
-      if (body.data.serviceMenus.length > 0) {
-        await tx.serviceMenu.createMany({
-          data: body.data.serviceMenus.map((row) => ({
-            id: row.id,
-            tenantId,
-            name: row.name,
-            durationMinutes: row.durationMinutes,
-            price: row.price,
-            createdAt: new Date(row.createdAt),
-            updatedAt: new Date(row.updatedAt),
-          })),
-        });
-      }
+    if (body.data.serviceMenus.length > 0) {
+      await prisma.serviceMenu.createMany({
+        data: body.data.serviceMenus.map((row) => ({
+          id: row.id,
+          tenantId,
+          name: row.name,
+          durationMinutes: row.durationMinutes,
+          price: row.price,
+          createdAt: new Date(row.createdAt),
+          updatedAt: new Date(row.updatedAt),
+        })),
+      });
+    }
 
-      if (body.data.appointments.length > 0) {
-        await tx.appointment.createMany({
-          data: body.data.appointments.map((row) => ({
-            id: row.id,
-            tenantId,
-            staffId: row.staffId,
-            customerId: row.customerId,
-            menuId: row.menuId,
-            startAt: new Date(row.startAt),
-            endAt: new Date(row.endAt),
-            status: row.status,
-            notes: row.notes,
-            createdAt: new Date(row.createdAt),
-            updatedAt: new Date(row.updatedAt),
-          })),
-        });
-      }
+    if (body.data.appointments.length > 0) {
+      await prisma.appointment.createMany({
+        data: body.data.appointments.map((row) => ({
+          id: row.id,
+          tenantId,
+          staffId: row.staffId,
+          customerId: row.customerId,
+          menuId: row.menuId,
+          startAt: new Date(row.startAt),
+          endAt: new Date(row.endAt),
+          status: row.status,
+          notes: row.notes,
+          createdAt: new Date(row.createdAt),
+          updatedAt: new Date(row.updatedAt),
+        })),
+      });
+    }
 
-      if (body.data.payments.length > 0) {
-        await tx.payment.createMany({
-          data: body.data.payments.map((row) => ({
-            id: row.id,
-            tenantId,
-            appointmentId: row.appointmentId,
-            staffId: row.staffId,
-            customerId: row.customerId,
-            amount: row.amount,
-            method: row.method,
-            paidAt: new Date(row.paidAt),
-            note: row.note,
-            createdAt: new Date(row.createdAt),
-            updatedAt: new Date(row.updatedAt),
-          })),
-        });
-      }
-    });
+    if (body.data.payments.length > 0) {
+      await prisma.payment.createMany({
+        data: body.data.payments.map((row) => ({
+          id: row.id,
+          tenantId,
+          appointmentId: row.appointmentId,
+          staffId: row.staffId,
+          customerId: row.customerId,
+          amount: row.amount,
+          method: row.method,
+          paidAt: new Date(row.paidAt),
+          note: row.note,
+          createdAt: new Date(row.createdAt),
+          updatedAt: new Date(row.updatedAt),
+        })),
+      });
+    }
 
     await logAudit({
       tenantId,
