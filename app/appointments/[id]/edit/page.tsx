@@ -97,7 +97,7 @@ export default async function EditAppointmentPage({ params, searchParams }: Prop
               defaultValue={appointment.staffId}
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
-              {staffList.map((staff) => (
+              {staffList.map((staff: { id: string; name: string }) => (
                 <option key={staff.id} value={staff.id}>
                   {staff.name}
                 </option>
@@ -113,7 +113,7 @@ export default async function EditAppointmentPage({ params, searchParams }: Prop
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">未選択</option>
-              {customerList.map((customer) => (
+              {customerList.map((customer: { id: string; lastName: string; firstName: string }) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.lastName} {customer.firstName}
                 </option>
@@ -129,7 +129,7 @@ export default async function EditAppointmentPage({ params, searchParams }: Prop
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">未選択</option>
-              {menuList.map((menu) => (
+              {menuList.map((menu: { id: string; name: string; durationMinutes: number }) => (
                 <option key={menu.id} value={menu.id}>
                   {menu.name} ({menu.durationMinutes}分)
                 </option>
