@@ -84,7 +84,7 @@ export default async function BackupPage() {
                 </tr>
               </thead>
               <tbody>
-                {backupLogs.map((log) => (
+                {backupLogs.map((log: (typeof backupLogs)[number]) => (
                   <tr key={log.id} className="border-b border-gray-100">
                     <td className="p-2">
                       {new Intl.DateTimeFormat("ja-JP", {

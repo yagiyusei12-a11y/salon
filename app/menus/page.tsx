@@ -159,7 +159,7 @@ export default async function MenusPage({ searchParams }: Props) {
           {menus.length === 0 ? (
             <p className="text-sm text-gray-500">メニューがまだありません。</p>
           ) : (
-            menus.map((menu) => (
+            menus.map((menu: (typeof menus)[number]) => (
               <div key={menu.id} className="rounded-lg border border-gray-200 p-4">
                 <form action={updateMenu} className="grid gap-3 sm:grid-cols-4">
                   <input type="hidden" name="menuId" value={menu.id} />

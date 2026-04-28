@@ -121,7 +121,7 @@ export default async function CustomerDetailPage({ params, searchParams }: Props
           {tags.length === 0 ? (
             <span className="text-sm text-gray-500">タグなし</span>
           ) : (
-            tags.map((tag) => (
+            tags.map((tag: string) => (
               <span
                 key={tag}
                 className={
@@ -155,7 +155,7 @@ export default async function CustomerDetailPage({ params, searchParams }: Props
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appointment) => (
+              {appointments.map((appointment: (typeof appointments)[number]) => (
                 <tr key={appointment.id} className="border-b border-gray-100">
                   <td className="p-2">
                     {new Intl.DateTimeFormat("ja-JP", {
@@ -202,7 +202,7 @@ export default async function CustomerDetailPage({ params, searchParams }: Props
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment) => (
+              {payments.map((payment: (typeof payments)[number]) => (
                 <tr key={payment.id} className="border-b border-gray-100">
                   <td className="p-2">
                     {new Intl.DateTimeFormat("ja-JP", {

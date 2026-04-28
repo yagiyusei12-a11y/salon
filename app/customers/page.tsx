@@ -233,7 +233,7 @@ export default async function CustomersPage({ searchParams }: Props) {
               </tr>
             </thead>
             <tbody>
-              {customers.map((customer) => (
+              {customers.map((customer: (typeof customers)[number]) => (
                 <tr key={customer.id} className="border-b border-gray-100">
                   <td className="p-2">
                     <Link
@@ -250,7 +250,7 @@ export default async function CustomersPage({ searchParams }: Props) {
                       {(customer.tags ?? "")
                         .split(",")
                         .filter(Boolean)
-                        .map((tag) => (
+                        .map((tag: string) => (
                           <span key={tag} className={renderTagBadge(tag)}>
                             {tag === "VIP"
                               ? "VIP"

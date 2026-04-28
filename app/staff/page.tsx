@@ -196,7 +196,7 @@ export default async function StaffPage({ searchParams }: Props) {
           ]}
         />
         <div className="space-y-3">
-          {staffUsers.map((user) => (
+          {staffUsers.map((user: (typeof staffUsers)[number]) => (
             <form
               key={user.id}
               action={updateStaff}

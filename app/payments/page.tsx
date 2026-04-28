@@ -207,7 +207,9 @@ export default async function PaymentsPage({ searchParams }: Props) {
       }),
     ]);
 
-  const payableAppointments = appointmentList.filter((appointment) => !appointment.payment);
+  const payableAppointments = appointmentList.filter(
+    (appointment: (typeof appointmentList)[number]) => !appointment.payment,
+  );
   const selectedAppointment =
     payableAppointments.find((appointment) => appointment.id === requestedAppointmentId) ?? null;
   const selectedAppointmentId = selectedAppointment?.id ?? "";
@@ -282,7 +284,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
             className="rounded-md border border-gray-300 px-3 py-2 text-sm"
           >
             <option value="">全スタッフ</option>
-            {staffList.map((staff) => (
+            {staffList.map((staff: (typeof staffList)[number]) => (
               <option key={staff.id} value={staff.id}>
                 {staff.name}
               </option>
@@ -362,7 +364,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
           {unpaidAppointments.length === 0 ? (
             <p className="text-sm text-gray-500">未会計の来店完了予約はありません。</p>
           ) : (
-            unpaidAppointments.map((appointment) => (
+            unpaidAppointments.map((appointment: (typeof unpaidAppointments)[number]) => (
               <div
                 key={appointment.id}
                 className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
@@ -453,7 +455,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">未選択</option>
-              {payableAppointments.map((appointment) => (
+              {payableAppointments.map((appointment: (typeof payableAppointments)[number]) => (
                 <option key={appointment.id} value={appointment.id}>
                   {new Intl.DateTimeFormat("ja-JP", {
                     month: "2-digit",
@@ -477,7 +479,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">未選択</option>
-              {staffList.map((staff) => (
+              {staffList.map((staff: (typeof staffList)[number]) => (
                 <option key={staff.id} value={staff.id}>
                   {staff.name}
                 </option>
@@ -492,7 +494,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">未選択</option>
-              {customerList.map((customer) => (
+              {customerList.map((customer: (typeof customerList)[number]) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.lastName} {customer.firstName}
                 </option>
@@ -548,7 +550,7 @@ export default async function PaymentsPage({ searchParams }: Props) {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment) => (
+              {payments.map((payment: (typeof payments)[number]) => (
                 <tr key={payment.id} className="border-b border-gray-100">
                   <td className="p-2">
                     {new Intl.DateTimeFormat("ja-JP", {

@@ -85,14 +85,16 @@ export default async function Home() {
   ]);
 
   const staffIds = staffSalesSummary
-    .map((row) => row.staffId)
+    .map((row: (typeof staffSalesSummary)[number]) => row.staffId)
     .filter((id): id is string => Boolean(id));
 
   const staffNames = await prisma.user.findMany({
     where: { id: { in: staffIds }, tenantId },
     select: { id: true, name: true },
   });
-  const staffNameMap = new Map(staffNames.map((staff) => [staff.id, staff.name]));
+  const staffNameMap = new Map(
+    staffNames.map((staff: (typeof staffNames)[number]) => [staff.id, staff.name]),
+  );
 
   const dailyRanges = Array.from({ length: 7 }, (_, index) => {
     const dayStart = addDays(sevenDaysAgo, index);
@@ -103,7 +105,7 @@ export default async function Home() {
     };
   });
   const dailyAggregates = await Promise.all(
-    dailyRanges.map((range) =>
+    dailyRanges.map((range: (typeof dailyRanges)[number]) =>
       prisma.payment.aggregate({
         where: {
           tenantId,
@@ -113,12 +115,12 @@ export default async function Home() {
       }),
     ),
   );
-  const dailySales = dailyRanges.map((range, index) => ({
+  const dailySales = dailyRanges.map((range: (typeof dailyRanges)[number], index) => ({
     date: range.key,
     amount: dailyAggregates[index]._sum.amount ?? 0,
   }));
 
-  const maxDailySales = Math.max(...dailySales.map((day) => day.amount), 1);
+  const maxDailySales = Math.max(...dailySales.map((day: (typeof dailySales)[number]) => day.amount), 1);
   const last7From = sevenDaysAgo.toISOString().slice(0, 10);
   const last7To = todayStart.toISOString().slice(0, 10);
 
@@ -187,7 +189,7 @@ export default async function Home() {
         <div className="rounded-xl border border-gray-200 bg-white p-5 lg:col-span-2">
           <h2 className="mb-4 text-lg font-medium">直近7日 売上推移</h2>
           <div className="space-y-3">
-            {dailySales.map((day) => {
+            {dailySales.map((day: (typeof dailySales)[number]) => {
               const width = Math.max(
                 6,
                 Math.round((day.amount / maxDailySales) * 100),
@@ -213,7 +215,7 @@ export default async function Home() {
         <div className="rounded-xl border border-gray-200 bg-white p-5">
           <h2 className="mb-4 text-lg font-medium">支払い方法比率</h2>
           <div className="space-y-3">
-            {paymentMethodSummary.map((row) => (
+            {paymentMethodSummary.map((row: (typeof paymentMethodSummary)[number]) => (
               <div key={row.method} className="flex items-center justify-between text-sm">
                 <span className="text-gray-700">
                   {row.method === "CASH"
@@ -238,7 +240,7 @@ export default async function Home() {
             {staffSalesSummary.length === 0 ? (
               <p className="text-sm text-gray-500">会計データがありません。</p>
             ) : (
-              staffSalesSummary.map((row) => (
+              staffSalesSummary.map((row: (typeof staffSalesSummary)[number]) => (
                 <div key={row.staffId} className="flex items-center justify-between text-sm">
                   <span className="text-gray-700">
                     {row.staffId ? staffNameMap.get(row.staffId) ?? "不明スタッフ" : "未設定"}
@@ -255,7 +257,7 @@ export default async function Home() {
           <h2 className="mb-4 text-lg font-medium">最近の会計（7日）</h2>
           <div className="space-y-2 text-sm">
             {recentPaymentRows
-              .map((payment, index) => (
+              .map((payment: (typeof recentPaymentRows)[number], index) => (
                 <div
                   key={`${payment.paidAt.toISOString()}-${index}`}
                   className="flex items-center justify-between border-b border-gray-100 py-1"

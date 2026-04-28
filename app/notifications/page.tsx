@@ -25,7 +25,7 @@ export default async function NotificationsPage({ searchParams }: Props) {
   const hiddenIds = new Set(
     String(resolvedSearchParams.hide ?? "")
       .split(",")
-      .map((id) => id.trim())
+      .map((id: string) => id.trim())
       .filter(Boolean),
   );
   const only = String(resolvedSearchParams.only ?? "").trim();
@@ -33,11 +33,17 @@ export default async function NotificationsPage({ searchParams }: Props) {
   const allNotifications = await getInAppNotifications(session.user.tenantId);
   const filteredByLevel =
     only === "warning"
-      ? allNotifications.filter((item) => item.level === "warning")
+      ? allNotifications.filter((item: (typeof allNotifications)[number]) => item.level === "warning")
       : allNotifications;
-  const notifications = filteredByLevel.filter((item) => !hiddenIds.has(item.id));
-  const warningCount = allNotifications.filter((item) => item.level === "warning").length;
-  const infoCount = allNotifications.filter((item) => item.level === "info").length;
+  const notifications = filteredByLevel.filter(
+    (item: (typeof filteredByLevel)[number]) => !hiddenIds.has(item.id),
+  );
+  const warningCount = allNotifications.filter(
+    (item: (typeof allNotifications)[number]) => item.level === "warning",
+  ).length;
+  const infoCount = allNotifications.filter(
+    (item: (typeof allNotifications)[number]) => item.level === "info",
+  ).length;
 
   const createHideHref = (id: string) => {
     const nextHidden = new Set(hiddenIds);
@@ -111,7 +117,7 @@ export default async function NotificationsPage({ searchParams }: Props) {
           {notifications.length === 0 ? (
             <p className="text-sm text-gray-500">表示対象の通知はありません。</p>
           ) : (
-            notifications.map((notification) => (
+            notifications.map((notification: (typeof notifications)[number]) => (
               <div
                 key={notification.id}
                 className={`rounded-md border px-3 py-2 text-sm ${
