@@ -135,7 +135,7 @@ export default async function AuditLogsPage({ searchParams }: Props) {
               </tr>
             </thead>
             <tbody>
-              {logs.map((log) => (
+              {logs.map((log: (typeof logs)[number]) => (
                 <tr key={log.id} className="border-b border-gray-100">
                   <td className="p-2">
                     {new Intl.DateTimeFormat("ja-JP", {
