@@ -1,0 +1,46 @@
+{
+  "name": "salon",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:auto": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed && npm run dev",
+    "dev:ps1": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/dev-auto.ps1",
+    "startup:enable": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/enable-startup-folder.ps1",
+    "startup:disable": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/disable-startup-folder.ps1",
+    "startup:register": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/register-startup-task.ps1",
+    "startup:unregister": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/unregister-startup-task.ps1",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "setup": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "bcrypt": "^6.0.0",
+    "next": "16.2.4",
+    "next-auth": "^4.24.14",
+    "pg": "^8.20.0",
+    "prisma": "^7.8.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
