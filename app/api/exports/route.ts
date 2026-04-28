@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { Prisma } from "@prisma/client";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -44,7 +43,7 @@ export async function GET(request: Request) {
   const toEndExclusive = toValid ? new Date(toValid.getTime() + 24 * 60 * 60 * 1000) : null;
 
   if (kind === "customers") {
-    const where: Prisma.CustomerWhereInput = {
+    const where = {
       tenantId,
       ...(tag && ["VIP", "CAUTION", "NEW"].includes(tag) ? { tags: { contains: tag } } : {}),
       ...(q
@@ -103,7 +102,7 @@ export async function GET(request: Request) {
   }
 
   if (kind === "appointments") {
-    const where: Prisma.AppointmentWhereInput = {
+    const where = {
       tenantId,
       ...(staffId ? { staffId } : {}),
       ...(status && ["BOOKED", "COMPLETED", "CANCELLED"].includes(status)
@@ -185,7 +184,7 @@ export async function GET(request: Request) {
   }
 
   if (kind === "payments") {
-    const where: Prisma.PaymentWhereInput = {
+    const where = {
       tenantId,
       ...(staffId ? { staffId } : {}),
       ...(method && ["CASH", "CARD", "QR"].includes(method)
