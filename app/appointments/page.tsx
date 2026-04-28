@@ -223,13 +223,14 @@ export default async function AppointmentsPage({ searchParams }: Props) {
 
   const defaultStartAt = toDateTimeLocalValue(new Date());
   const todayBookedCount = todayAppointments.filter(
-    (appointment) => appointment.status === "BOOKED",
+    (appointment: (typeof todayAppointments)[number]) => appointment.status === "BOOKED",
   ).length;
   const todayCompletedCount = todayAppointments.filter(
-    (appointment) => appointment.status === "COMPLETED",
+    (appointment: (typeof todayAppointments)[number]) => appointment.status === "COMPLETED",
   ).length;
   const todayUnpaidCompletedCount = todayAppointments.filter(
-    (appointment) => appointment.status === "COMPLETED" && !appointment.payment,
+    (appointment: (typeof todayAppointments)[number]) =>
+      appointment.status === "COMPLETED" && !appointment.payment,
   ).length;
   const todayDateParam = toDateParam(new Date());
   const weekStartDateParam = toDateParam(todayStart);
@@ -277,7 +278,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
               className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
             >
               <option value="">選択してください</option>
-              {staffList.map((staff) => (
+              {staffList.map((staff: (typeof staffList)[number]) => (
                 <option key={staff.id} value={staff.id}>
                   {staff.name}
                 </option>
@@ -293,7 +294,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
               defaultValue={preselectedCustomerId}
             >
               <option value="">未選択</option>
-              {customerList.map((customer) => (
+              {customerList.map((customer: (typeof customerList)[number]) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.lastName} {customer.firstName}
                 </option>
@@ -309,7 +310,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
               defaultValue=""
             >
               <option value="">未選択</option>
-              {menuList.map((menu) => (
+              {menuList.map((menu: (typeof menuList)[number]) => (
                 <option key={menu.id} value={menu.id}>
                   {menu.name} ({menu.durationMinutes}分)
                 </option>
@@ -383,7 +384,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
             className="rounded-md border border-gray-300 px-3 py-2 text-sm"
           >
             <option value="">全スタッフ</option>
-            {staffList.map((staff) => (
+            {staffList.map((staff: (typeof staffList)[number]) => (
               <option key={staff.id} value={staff.id}>
                 {staff.name}
               </option>
@@ -473,7 +474,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
           {todayAppointments.length === 0 ? (
             <p className="text-sm text-gray-500">本日の予約はありません。</p>
           ) : (
-            todayAppointments.map((appointment) => (
+            todayAppointments.map((appointment: (typeof todayAppointments)[number]) => (
               <div
                 key={appointment.id}
                 className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
@@ -612,9 +613,10 @@ export default async function AppointmentsPage({ searchParams }: Props) {
           </div>
         </div>
         <div className="space-y-4">
-          {staffList.map((staff) => {
+          {staffList.map((staff: (typeof staffList)[number]) => {
             const rows = calendarAppointments.filter(
-              (appointment) => appointment.staff.id === staff.id,
+              (appointment: (typeof calendarAppointments)[number]) =>
+                appointment.staff.id === staff.id,
             );
             return (
               <div
@@ -628,7 +630,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
                   <p className="text-sm text-gray-500">予約なし</p>
                 ) : (
                   <div className="space-y-2">
-                    {rows.map((appointment) => (
+                    {rows.map((appointment: (typeof rows)[number]) => (
                       <div
                         key={appointment.id}
                         className="rounded-md border border-gray-200 bg-white px-3 py-2 text-sm"
@@ -730,7 +732,7 @@ export default async function AppointmentsPage({ searchParams }: Props) {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appointment) => (
+              {appointments.map((appointment: (typeof appointments)[number]) => (
                 <tr key={appointment.id} className="border-b border-gray-100">
                   <td className="p-2">
                     {new Intl.DateTimeFormat("ja-JP", {
