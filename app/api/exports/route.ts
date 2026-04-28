@@ -81,7 +81,7 @@ export async function GET(request: Request) {
         "notes",
         "createdAt",
       ],
-      customers.map((customer) => [
+      customers.map((customer: (typeof customers)[number]) => [
         customer.id,
         customer.lastName,
         customer.firstName,
@@ -160,7 +160,7 @@ export async function GET(request: Request) {
         "notes",
         "createdAt",
       ],
-      appointments.map((appointment) => [
+      appointments.map((appointment: (typeof appointments)[number]) => [
         appointment.id,
         appointment.status,
         appointment.staff.name,
@@ -240,7 +240,7 @@ export async function GET(request: Request) {
         "note",
         "createdAt",
       ],
-      payments.map((payment) => [
+      payments.map((payment: (typeof payments)[number]) => [
         payment.id,
         payment.amount,
         payment.method,
