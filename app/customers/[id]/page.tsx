@@ -52,7 +52,10 @@ export default async function CustomerDetailPage({ params, searchParams }: Props
     notFound();
   }
 
-  const totalSales = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  const totalSales = payments.reduce(
+    (sum: number, payment: (typeof payments)[number]) => sum + payment.amount,
+    0,
+  );
   const tags = (customer.tags ?? "").split(",").filter(Boolean);
 
   return (
