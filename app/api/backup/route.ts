@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import type { Prisma } from "@prisma/client";
 
 import { authOptions } from "@/lib/auth";
 import { logAudit } from "@/lib/audit-log";
@@ -141,7 +142,7 @@ export async function POST(request: Request) {
       return new NextResponse("Invalid backup payload", { status: 400 });
     }
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.payment.deleteMany({ where: { tenantId } });
       await tx.appointment.deleteMany({ where: { tenantId } });
       await tx.serviceMenu.deleteMany({ where: { tenantId } });
