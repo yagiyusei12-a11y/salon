@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { SignOutButton } from "@/components/sign-out-button";
 import { authOptions } from "@/lib/auth";
-import { getInAppNotifications } from "@/lib/notifications";
+import { getInAppNotifications, type InAppNotification } from "@/lib/notifications";
 import { prisma } from "@/lib/prisma";
 
 function startOfDay(date: Date) {
@@ -92,8 +92,8 @@ export default async function Home() {
     where: { id: { in: staffIds }, tenantId },
     select: { id: true, name: true },
   });
-  const staffNameMap = new Map(
-    staffNames.map((staff: (typeof staffNames)[number]) => [staff.id, staff.name]),
+  const staffNameMap = new Map<string, string>(
+    staffNames.map((staff) => [staff.id, staff.name]),
   );
 
   const dailyRanges = Array.from({ length: 7 }, (_, index) => {
@@ -128,7 +128,7 @@ export default async function Home() {
   const todayPaymentCount = todayPaymentSummary._count.id;
   const notifications = await getInAppNotifications(tenantId);
   const warningNotificationCount = notifications.filter(
-    (notification) => notification.level === "warning",
+    (notification: InAppNotification) => notification.level === "warning",
   ).length;
 
   return (
