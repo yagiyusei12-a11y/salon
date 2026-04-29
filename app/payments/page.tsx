@@ -211,7 +211,10 @@ export default async function PaymentsPage({ searchParams }: Props) {
     (appointment: (typeof appointmentList)[number]) => !appointment.payment,
   );
   const selectedAppointment =
-    payableAppointments.find((appointment) => appointment.id === requestedAppointmentId) ?? null;
+    payableAppointments.find(
+      (appointment: (typeof appointmentList)[number]) =>
+        appointment.id === requestedAppointmentId,
+    ) ?? null;
   const selectedAppointmentId = selectedAppointment?.id ?? "";
   const defaultAmount = selectedAppointment?.menu?.price ?? "";
   const defaultStaffId = selectedAppointment?.staffId ?? "";
