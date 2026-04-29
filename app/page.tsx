@@ -93,7 +93,7 @@ export default async function Home() {
     select: { id: true, name: true },
   });
   const staffNameMap = new Map<string, string>(
-    staffNames.map((staff) => [staff.id, staff.name]),
+    staffNames.map((staff: (typeof staffNames)[number]) => [staff.id, staff.name]),
   );
 
   const dailyRanges = Array.from({ length: 7 }, (_, index) => {
