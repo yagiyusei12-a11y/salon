@@ -25,16 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <div className="flex-1">{children}</div>
         <footer className="border-t border-gray-200 bg-white px-4 py-2">
-          <div className="mx-auto flex w-full max-w-6xl items-center justify-between text-xs text-gray-500">
-            <span>Salon MVP v{packageJson.version}</span>
-            <a href="/api/health" className="hover:underline">
-              health
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
+            <span>Salon 管理 v{packageJson.version}</span>
+            <a href="/api/health" className="text-emerald-700 hover:underline">
+              稼働確認（health）
             </a>
           </div>
         </footer>
