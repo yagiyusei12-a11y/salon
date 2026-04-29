@@ -10,7 +10,7 @@
     "startup:disable": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/disable-startup-folder.ps1",
     "startup:register": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/register-startup-task.ps1",
     "startup:unregister": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/unregister-startup-task.ps1",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "prisma:generate": "prisma generate",
