@@ -96,7 +96,7 @@ export default async function Home() {
     staffNames.map((staff: (typeof staffNames)[number]) => [staff.id, staff.name]),
   );
 
-  const dailyRanges = Array.from({ length: 7 }, (_, index) => {
+  const dailyRanges = Array.from({ length: 7 }, (_: unknown, index: number) => {
     const dayStart = addDays(sevenDaysAgo, index);
     return {
       key: dayStart.toISOString().slice(0, 10),
@@ -115,7 +115,7 @@ export default async function Home() {
       }),
     ),
   );
-  const dailySales = dailyRanges.map((range: (typeof dailyRanges)[number], index) => ({
+  const dailySales = dailyRanges.map((range: (typeof dailyRanges)[number], index: number) => ({
     date: range.key,
     amount: dailyAggregates[index]._sum.amount ?? 0,
   }));
@@ -257,7 +257,7 @@ export default async function Home() {
           <h2 className="mb-4 text-lg font-medium">最近の会計（7日）</h2>
           <div className="space-y-2 text-sm">
             {recentPaymentRows
-              .map((payment: (typeof recentPaymentRows)[number], index) => (
+              .map((payment: (typeof recentPaymentRows)[number], index: number) => (
                 <div
                   key={`${payment.paidAt.toISOString()}-${index}`}
                   className="flex items-center justify-between border-b border-gray-100 py-1"
