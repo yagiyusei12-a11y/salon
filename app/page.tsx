@@ -86,7 +86,7 @@ export default async function Home() {
 
   const staffIds = staffSalesSummary
     .map((row: (typeof staffSalesSummary)[number]) => row.staffId)
-    .filter((id): id is string => Boolean(id));
+    .filter((id: string | null): id is string => Boolean(id));
 
   const staffNames = await prisma.user.findMany({
     where: { id: { in: staffIds }, tenantId },
